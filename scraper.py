@@ -7,6 +7,8 @@ def main():
         print("Length must be 2")
         sys.exit(1)
     url = sys.argv[1]
+    if not url.startswith("https"):
+        url="https://"+url
     try:
         header={ 'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url,headers=header)
@@ -31,8 +33,10 @@ def main():
     links = soup.find_all("a", href=True)
 
     if links:
-        print(" ".join(link['href'] for link in links))
+        for link in links:
+            print(link['href'])
     else:
         print("No link found.")
 if __name__ == "__main__":
     main()
+
